@@ -10,7 +10,7 @@ from django.urls import reverse
 def GlobalCovid(request):
     url = 'https://api.covid19api.com/world/total'
     url2 = 'https://api.covid19api.com/summary'
-
+    countries = country.objects.all()
     rGlobal = requests.get(url).json()
 
     if request.method == "POST":
@@ -19,29 +19,27 @@ def GlobalCovid(request):
         country.objects.get_or_create(name=cntry)
 
     try:
-     countries = country.objects.all()
-     
-     country_data = []
-     
-     for c in countries:
-         r = requests.get(url2).json()
-         i = 0
-         while i < len(r['Countries']):
-             i += 1
-             if r['Countries'][i]["Country"] == c.name:
-                 covid = {
-                     'Country': r['Countries'][i]['Country'],
-                     'CountryCode': r['Countries'][i]['CountryCode'],
-                     'NewConfirmed': r['Countries'][i]['NewConfirmed'],
-                     'TotalConfirmed': r['Countries'][i]['TotalConfirmed'],
-                     'NewDeaths': r['Countries'][i]['NewDeaths'],
-                     'TotalDeaths': r['Countries'][i]['TotalDeaths'],
-                     'NewRecovered': r['Countries'][i]['NewRecovered'],
-                     'TotalRecovered': r['Countries'][i]['TotalRecovered'],
-                     'Date': r['Countries'][i]['Date'],
-                 }
-                 country_data.append(covid)
-                 break
+        countries = country.objects.all()
+        country_data = []
+        for c in countries:
+            r = requests.get(url2).json()
+            i = 0
+            while i < len(r['Countries']):
+                i += 1
+                if r['Countries'][i]["Country"] == c.name:
+                    covid = {
+                        'Country': r['Countries'][i]['Country'],
+                        'CountryCode': r['Countries'][i]['CountryCode'],
+                        'NewConfirmed': r['Countries'][i]['NewConfirmed'],
+                        'TotalConfirmed': r['Countries'][i]['TotalConfirmed'],
+                        'NewDeaths': r['Countries'][i]['NewDeaths'],
+                        'TotalDeaths': r['Countries'][i]['TotalDeaths'],
+                        'NewRecovered': r['Countries'][i]['NewRecovered'],
+                        'TotalRecovered': r['Countries'][i]['TotalRecovered'],
+                        'Date': r['Countries'][i]['Date'],
+                    }
+                    country_data.append(covid)
+                    break
     except:
         if c.name != r['Countries'][1]['Country']:
             c.delete()
