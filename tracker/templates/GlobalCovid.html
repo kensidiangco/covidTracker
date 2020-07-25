@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h1>Corona Virus World Total Cases</h1>
+    
+    <div>
+        <p>Total Confirmed: {{ covid.TotalConfirmed }}</p>
+        <p>Total Deaths: {{ covid.TotalDeaths }}</p>
+        <p>Total Recovered: {{ covid.TotalRecovered }}</p>
+    </div>
+{% endblock %}
