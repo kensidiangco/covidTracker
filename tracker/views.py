@@ -2,7 +2,6 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponseRedirect
 from .models import country
 import requests
-from .forms import countryForm
 from django.http import HttpResponse
 from django.contrib import messages
 from django.urls import reverse
@@ -14,7 +13,6 @@ def GlobalCovid(request):
     rGlobal = requests.get(url).json()
     covidKey = requests.get(url2).json()
 
-    countries = country.objects.all()
 
     if request.method == "POST":
         cntry = request.POST['country']
@@ -23,7 +21,7 @@ def GlobalCovid(request):
     try:
         countries = country.objects.all()
         country_data = []
-        
+
         for c in countries:
             r = requests.get(url2).json()
             i = 0
@@ -46,29 +44,18 @@ def GlobalCovid(request):
     except:
         if c.name != r['Countries'][1]['Country']:
             c.delete()
-            messages.error(request, 'Sorry, unable to fetch %s data.'%(c.name))
-            form = countryForm()
-            context = {
-                'country_data': country_data,
-                'form': form,
-                'covidKey': covidKey
-            }
-            return render(request, 'countriesCases.html', context)
+            messages.error(request, 'Sorry, unable to fetch %s data due to updating data. try to fetch again later.'%(c.name))
+            return HttpResponseRedirect('')
     
     covid = {
         'TotalConfirmed' : rGlobal['TotalConfirmed'],
         'TotalDeaths' : rGlobal['TotalDeaths'],
         'TotalRecovered' : rGlobal['TotalRecovered'],
     }
-
-    form = countryForm()
     context = {
         'country_data': country_data,
-        'form': form,
         'covidKey': covidKey,
-        'covid' : covid
+        'covid' : covid,
     }
     
     return render(request, 'GlobalCovid.html', context)
-    
-    
