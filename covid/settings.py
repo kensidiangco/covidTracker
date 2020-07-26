@@ -25,7 +25,7 @@ SECRET_KEY = 'zrlwomu)76zkd5spma5cychyz4nl@c2_-o0qmu(5%3ecyp8&4o'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['http://kensidiangco.pythonanywhere.com/']
 
 
 # Application definition
@@ -131,7 +131,7 @@ if os.getcwd() == '/app':
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
     #Allow all host headers
-    ALLOWED_HOSTS = ['covidkentracker.herokuapp.com', 'kensidiangco.pythonanywhere.com']
+    ALLOWED_HOSTS = ['covidkentracker.herokuapp.com']
     DEBUG = True
 
     #Static asset configuration
