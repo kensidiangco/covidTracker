@@ -131,7 +131,7 @@ if os.getcwd() == '/app':
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
     #Allow all host headers
-    ALLOWED_HOSTS = ['covidkentracker.herokuapp.com']
+    ALLOWED_HOSTS = ['covidkentracker.herokuapp.com', 'kensidiangco.pythonanywhere.com']
     DEBUG = True
 
     #Static asset configuration
