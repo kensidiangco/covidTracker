@@ -1,5 +1,4 @@
-from django.shortcuts import render, redirect
-from django.http import HttpResponseRedirect
+from django.shortcuts import render
 from .models import country
 import requests
 from django.contrib import messages
@@ -42,11 +41,11 @@ def GlobalCovid(request):
     except:
         if c.name != r['Countries'][1]['Country']:
             c.delete()
-
             messages.error(request, 'Sorry, unable to fetch %s data due to updating data. try to fetch again later.'%(c.name))
-            
-            return redirect('Global')
-    
+
+        elif cntry.cleaned_data.get("country") in country_data:
+            messages.error(request, '%s already fetched. look at it below'%(c.name))
+
     covid = {
         'TotalConfirmed' : rGlobal['TotalConfirmed'],
         'TotalDeaths' : rGlobal['TotalDeaths'],
@@ -57,5 +56,5 @@ def GlobalCovid(request):
         'covidKey': covidKey,
         'covid' : covid,
     }
-    
+
     return render(request, 'GlobalCovid.html', context)
