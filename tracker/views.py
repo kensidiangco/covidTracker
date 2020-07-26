@@ -1,10 +1,9 @@
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from .models import country
 import requests
 from django.http import HttpResponse
 from django.contrib import messages
-from django.urls import reverse
 
 def GlobalCovid(request):
     url = 'https://api.covid19api.com/world/total'
@@ -44,7 +43,9 @@ def GlobalCovid(request):
     except:
         if c.name != r['Countries'][1]['Country']:
             c.delete()
+
             messages.error(request, 'Sorry, unable to fetch %s data due to updating data. try to fetch again later.'%(c.name))
+            
             return HttpResponseRedirect('')
     
     covid = {
