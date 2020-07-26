@@ -1,8 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect
 from .models import country
 import requests
-from django.http import HttpResponse
 from django.contrib import messages
 
 def GlobalCovid(request):
@@ -46,7 +45,7 @@ def GlobalCovid(request):
 
             messages.error(request, 'Sorry, unable to fetch %s data due to updating data. try to fetch again later.'%(c.name))
             
-            return HttpResponseRedirect('')
+            return redirect('Global')
     
     covid = {
         'TotalConfirmed' : rGlobal['TotalConfirmed'],
