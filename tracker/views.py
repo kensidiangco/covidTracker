@@ -41,7 +41,7 @@ def GlobalCovid(request):
     except:
         if c.name != r['Countries'][1]['Country']:
             c.delete()
-            messages.error(request, 'Sorry, unable to fetch %s data due to updating data. try to fetch again later.'%(c.name))
+            messages.error(request, 'Sorry, unable to fetch %s due to updating data. try to fetch again later.'%(c.name))
 
         elif cntry.cleaned_data.get("country") in country_data:
             messages.error(request, '%s already fetched. look at it below'%(c.name))
