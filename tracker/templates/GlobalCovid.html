@@ -13,38 +13,34 @@
 	</div>
 </div>
 <br>
-<form method="POST">{% csrf_token %}
+<form method="POST" class="form-inline">{% csrf_token %}
     {% for message in messages %}
         <p class="lead text-danger">{{message}}</p>
     {% endfor %}
-    <div class="row">
-        <div class="col-md-3">
-            <select class="form-control" id="country" name="country" required="">
-                <option value="">Fetch Another Country</option>
-                {% for i, k in covidKey.items %}
-                    {% if i == 'Countries' %}
-                        {% for newItem in k %}
-                            {% for item, key in newItem.items %}
-                                {% if item == 'Country' %}
-                                    <option value="{{key}}">{{key}}</option>
-                                {% endif %}
-                            {% endfor %}
+    <div class="form-group mx-sm-3 mb-2">
+        <select class="form-control" id="country" name="country" required="">
+            <option value="">Fetch Another Country</option>
+            {% for i, k in covidKey.items %}
+                {% if i == 'Countries' %}
+                    {% for newItem in k %}
+                        {% for item, key in newItem.items %}
+                            {% if item == 'Country' %}
+                                <option value="{{key}}">{{key}}</option>
+                            {% endif %}
                         {% endfor %}
-                    {% endif %}
-                {% endfor %}
-            </select>
-        </div><br>
-        <div class="col-sm-2">
-            <button type="submit" class="btn btn-info btn-block">Fetch</button>
-        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endfor %}
+        </select>
     </div>
+    <button type="submit" class="btn btn-primary mb-2">Fetch</button>
 </form>
 <div class="row">
     {% for c in country_data reversed %}
     <div class="col-md-6">
         <div class="card">
             <div class="card-header">
-                <h1 class="display-4">{{ c.Country }} ({{c.CountryCode }})</h1>
+                <h1 class="display-4"><a href="{% url 'Country' id=c.id %}">{{ c.Country }} ({{c.CountryCode }})</a></h1>
             </div>
             <div class="card-body">
                 <div class="lead"><strong>
@@ -61,4 +57,5 @@
     </div>
     {% endfor %}
 </div>
+<a href="#top" id="myBtn" class="bg-light">Top</a>
 {% endblock %}
