@@ -38,6 +38,7 @@ def GlobalCovid(request):
                         'NewRecovered': r['Countries'][i]['NewRecovered'],
                         'TotalRecovered': r['Countries'][i]['TotalRecovered'],
                         'Date': r['Countries'][i]['Date'],
+                        'ActiveCases': r['Countries'][i]['TotalConfirmed'] - r['Countries'][i]['TotalRecovered'] - r['Countries'][i]['TotalDeaths'] 
                     }
                     country_data.append(covid)
                     break
@@ -52,6 +53,7 @@ def GlobalCovid(request):
         'TotalConfirmed' : rGlobal['TotalConfirmed'],
         'TotalDeaths' : rGlobal['TotalDeaths'],
         'TotalRecovered' : rGlobal['TotalRecovered'],
+        'ActiveCases': rGlobal['TotalConfirmed'] - rGlobal['TotalRecovered'] - rGlobal['TotalDeaths']
     }
     context = {
         'country_data': country_data,
@@ -83,6 +85,7 @@ def countryCases(request, id):
                 'NewRecovered': r['Countries'][i]['NewRecovered'],
                 'TotalRecovered': r['Countries'][i]['TotalRecovered'],
                 'Date': r['Countries'][i]['Date'],
+                'ActiveCases': r['Countries'][i]['TotalConfirmed'] - r['Countries'][i]['TotalRecovered'] - r['Countries'][i]['TotalDeaths'] 
             }
             data.append(covid)
             break
